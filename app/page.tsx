@@ -1,6 +1,7 @@
-// app/page.tsx
+
 'use client';
 
+import Link from "next/link"; 
 import SearchHero from "@/components/SearchHero";
 import JobFeed from "@/components/JobFeed";
 import FeedHeader from "@/components/FeedHeader";
@@ -15,7 +16,7 @@ export default function HomePage() {
     activeWhere,
     handleSearchSubmit,
     handleClearFilters,
-  } = useJobs();
+  } = useJobs({ limit: 5 });
 
   return (
     <div className="w-full">
@@ -36,7 +37,19 @@ export default function HomePage() {
             ⚠️ {error}
           </p>
         ) : (
-          <JobFeed jobs={jobs} />
+          <div className="space-y-6">
+            <JobFeed jobs={jobs} />
+            
+            {/* Navigational button to hit the main workspace dashboard */}
+            <div className="mt-8 text-center">
+              <Link
+                href="/jobs"
+                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors w-full sm:w-auto"
+              >
+                Explore All Jobs →
+              </Link>
+            </div>
+          </div>
         )}
       </main>
     </div>
