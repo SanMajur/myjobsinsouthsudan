@@ -1,9 +1,13 @@
-// hooks/useJobs.ts
 import { useState, useEffect } from "react";
 import { Job } from "@/types/job";
 import { fetchFilteredJobs } from "@/lib/services/jobService";
 
-export function useJobs() {
+// Define an options configuration interface
+interface UseJobsOptions {
+  limit?: number;
+}
+
+export function useJobs(options?: UseJobsOptions) {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +25,12 @@ export function useJobs() {
           setError(null);
         }
         
-        const data = await fetchFilteredJobs(activeWhat, activeWhere);
+        let data = await fetchFilteredJobs(activeWhat, activeWhere);
+        
+        // If a limit is specified, slice the array safely here
+        if (options?.limit) {
+          data = data.slice(0, options.limit);
+        }
         
         if (isMounted) {
           setJobs(data);
@@ -43,7 +52,7 @@ export function useJobs() {
     return () => {
       isMounted = false;
     };
-  }, [activeWhat, activeWhere]);
+  }, [activeWhat, activeWhere, options?.limit]); // Added limit to dependency tracking
 
   const handleSearchSubmit = (what: string, where: string) => {
     setActiveWhat(what);
