@@ -40,8 +40,8 @@ Connecting job seekers and employers in South Sudan
 **Week 4: Auth + MVP**
 - [x] Day 11: Supabase Auth + middleware
 - [x] Day 12: Protected /post-job route
-- [ ] Day 13: User profiles + my-jobs
-- [ ] Day 14: MVP live + share
+- [x] Day 13: User profiles + my-jobs
+- [x] Day 14: MVP live + share
 
 ### **Why**
 Job boards in South Sudan have broken data models. Titles mixed with locations. String dates. No filters.
